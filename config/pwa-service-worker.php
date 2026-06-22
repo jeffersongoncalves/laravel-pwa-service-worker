@@ -26,6 +26,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Route Middleware
+    |--------------------------------------------------------------------------
+    |
+    | Middleware applied to the /sw.js route. Use this to attach, for example, a
+    | security-headers middleware so the worker response carries the same
+    | hardening as the rest of the site. Class-strings or aliases, e.g.:
+    |
+    |   'middleware' => [\App\Http\Middleware\SecurityHeaders::class],
+    |
+    */
+    'middleware' => [],
+
+    /*
+    |--------------------------------------------------------------------------
     | View
     |--------------------------------------------------------------------------
     |
