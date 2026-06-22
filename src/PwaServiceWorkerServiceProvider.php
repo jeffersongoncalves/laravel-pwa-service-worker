@@ -26,8 +26,10 @@ class PwaServiceWorkerServiceProvider extends PackageServiceProvider
         }
 
         // Registered here (not in a routes file) so the path is config-driven.
-        // An invokable controller keeps route:cache working in production.
+        // An invokable controller keeps route:cache working in production. Extra
+        // middleware (e.g. a security-headers middleware) is attached from config.
         Route::get(ltrim((string) config('pwa-service-worker.path', 'sw.js'), '/'), ServiceWorkerController::class)
+            ->middleware((array) config('pwa-service-worker.middleware', []))
             ->name('pwa.service-worker');
     }
 }

@@ -58,6 +58,7 @@ Route::view('/offline', 'offline')->name('pwa.offline');
 | --- | --- | --- |
 | `enabled` | `true` | Register the `/sw.js` route. |
 | `path` | `sw.js` | Route path (keep at root for a `/` scope). |
+| `middleware` | `[]` | Extra middleware applied to the `/sw.js` route (e.g. a security-headers middleware). |
 | `view` | `pwa-service-worker::sw` | Blade view rendered as the worker body. |
 | `build_manifest` | `public/build/manifest.json` | md5 seeds the cache version. |
 | `cache_prefix` | `pwa` | Cache name is `{prefix}-v{version}`. |

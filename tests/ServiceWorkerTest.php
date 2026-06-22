@@ -47,6 +47,11 @@ it('honours a custom cache prefix', function () {
     expect($this->get('/sw.js')->getContent())->toContain("const CACHE_PREFIX = 'jg-pwa'");
 });
 
+it('applies the configured route middleware', function () {
+    // TestCase wires pwa-service-worker.middleware to a header-adding middleware.
+    $this->get('/sw.js')->assertHeader('X-Sw-Middleware', 'applied');
+});
+
 it('serves the worker at a custom path', function () {
     // The route path is read at boot, so assert the default path responds and
     // a foreign path 404s (proving the route is bound to the configured path).
