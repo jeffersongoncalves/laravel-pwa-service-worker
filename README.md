@@ -44,6 +44,44 @@ php artisan vendor:publish --tag="pwa-service-worker-config"
 php artisan vendor:publish --tag="pwa-service-worker-views"
 ```
 
+## Update notifications
+
+When a new worker activates it `postMessage`s `{ type: 'pwa-updated', version }` to every controlled page. Listen for it to surface an "update available" prompt and reload once the user accepts:
+
+```html
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+
+    let reloading = false;
+
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data?.type !== 'pwa-updated') {
+        return;
+      }
+
+      // First install fires this too; only prompt when a worker was already
+      // in control (i.e. this is a genuine upgrade, not the initial load).
+      if (!navigator.serviceWorker.controller) {
+        return;
+      }
+
+      if (window.confirm('A new version is available. Reload now?')) {
+        window.location.reload();
+      }
+    });
+
+    // Guard against reload loops if the SW takes control mid-session.
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (reloading) {
+        return;
+      }
+      reloading = true;
+    });
+  }
+</script>
+```
+
 ## Offline fallback
 
 The worker serves `config('pwa-service-worker.offline_url')` (default `/offline`) for a failed navigation when nothing is cached. **You** register that route — it is intentionally not provided, since the offline page is app-specific:

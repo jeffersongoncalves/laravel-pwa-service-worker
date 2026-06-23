@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Config;
+use JeffersonGoncalves\PwaServiceWorker\Tests\TestCase;
 
 it('serves the service worker as javascript with the right headers', function () {
     $response = $this->get('/sw.js');
@@ -57,4 +58,43 @@ it('serves the worker at a custom path', function () {
     // a foreign path 404s (proving the route is bound to the configured path).
     $this->get('/sw.js')->assertOk();
     $this->get('/service-worker.js')->assertNotFound();
+});
+
+it('derives a 12-char version from the build manifest md5 when present', function () {
+    $manifest = tempnam(sys_get_temp_dir(), 'pwa-sw-manifest');
+    file_put_contents($manifest, '{"resources/app.js":{"file":"assets/app-abc123.js"}}');
+    Config::set('pwa-service-worker.build_manifest', $manifest);
+
+    try {
+        $expected = substr((string) md5_file($manifest), 0, 12);
+
+        expect($this->get('/sw.js')->getContent())
+            ->toContain("const VERSION = '{$expected}'")
+            ->not->toContain("const VERSION = 'dev'");
+    } finally {
+        @unlink($manifest);
+    }
+});
+
+it('precaches each url independently so one bad url does not abort install', function () {
+    $body = $this->get('/sw.js')->getContent();
+
+    // Per-URL add().catch() instead of the atomic addAll(), so a single 404
+    // precache URL cannot reject the whole install.
+    expect($body)
+        ->toContain('cache.add(url).catch(() => {})')
+        ->not->toContain('cache.addAll(PRECACHE_URLS)');
+});
+
+it('does not register the /sw.js route when the package is disabled', function () {
+    TestCase::$enabled = false;
+
+    try {
+        $this->refreshApplication();
+
+        $this->get('/sw.js')->assertNotFound();
+    } finally {
+        TestCase::$enabled = true;
+        $this->refreshApplication();
+    }
 });

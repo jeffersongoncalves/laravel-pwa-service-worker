@@ -21,7 +21,15 @@ self.addEventListener('install', (event) => {
     self.skipWaiting();
 
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS)),
+        // Cache each URL independently: cache.addAll() is atomic, so a single
+        // 404/redirect (e.g. an /offline route the app forgot to register)
+        // would reject the whole install and leave the SW permanently broken.
+        // Per-URL add() with a swallowed rejection installs best-effort instead.
+        caches.open(CACHE_NAME).then((cache) =>
+            Promise.all(
+                PRECACHE_URLS.map((url) => cache.add(url).catch(() => {})),
+            ),
+        ),
     );
 });
 
