@@ -1,6 +1,6 @@
 <div class="filament-hidden">
 
-![Laravel PWA Service Worker](https://raw.githubusercontent.com/jeffersongoncalves/laravel-pwa-service-worker/master/art/jeffersongoncalves-laravel-pwa-service-worker.png)
+![Laravel PWA Service Worker](https://raw.githubusercontent.com/jeffersongoncalves/laravel-pwa-service-worker/main/art/jeffersongoncalves-laravel-pwa-service-worker.png)
 
 </div>
 
@@ -9,8 +9,8 @@
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-support-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/jeffersongoncalves)
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/jeffersongoncalves/laravel-pwa-service-worker.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/laravel-pwa-service-worker)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/laravel-pwa-service-worker/tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/laravel-pwa-service-worker/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/laravel-pwa-service-worker/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/jeffersongoncalves/laravel-pwa-service-worker/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amaster)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/laravel-pwa-service-worker/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/jeffersongoncalves/laravel-pwa-service-worker/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/jeffersongoncalves/laravel-pwa-service-worker/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/jeffersongoncalves/laravel-pwa-service-worker/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/jeffersongoncalves/laravel-pwa-service-worker.svg?style=flat-square)](https://packagist.org/packages/jeffersongoncalves/laravel-pwa-service-worker)
 
 Serve a production-ready PWA service worker at `/sw.js`, rendered from a Blade template whose cache version tracks the Vite build manifest hash — so a `npm run build` automatically busts the SW cache without you editing the worker.
